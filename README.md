@@ -70,7 +70,9 @@ Precisa do **backend no ar** (passo 1).
 
 ### 3. IoT (opcional)
 
-Simulador de sensor que alimenta a API. Na pasta `iot/`:
+O `simulador_sensor.py` imita um dispositivo IoT instalado numa localização: a cada poucos segundos ele "lê" as condições do céu (temperatura, chuva, nebulosidade e luminosidade) com valores gerados por código e envia essas leituras para a API via `POST /leituras`, exatamente como um sensor físico (Arduino, ESP32) faria. O interessante é que ele fecha o ciclo completo do projeto — **sensor → API → banco → app** — demonstrando o fluxo real de uma solução IoT sem precisar montar hardware; e como o backend aplica a mesma regra de observação do app sobre cada leitura recebida, dá para ver o sistema reagindo em tempo real a dados que chegam de fora.
+
+Na pasta `iot/`:
 
 ```bash
 cd iot
