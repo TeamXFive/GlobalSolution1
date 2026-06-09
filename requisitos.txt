@@ -1,0 +1,183 @@
+========================================================================
+ STATUS DOS REQUISITOS - "Tem Satélite Passando Por Mim Agora?"
+ Global Solution FIAP - Indústria Espacial
+ Atualizado em: 09/06/2026
+========================================================================
+
+LEGENDA:
+[X] = Implementado
+[~] = Implementado parcialmente / com observação
+[ ] = Não implementado
+
+ACESSO DE TESTE (login):
+  - Email: teste@email.com
+  - Senha: 123456
+  >> Funciona no app mobile e no POST /login da API. A senha é verificada
+     no backend com BCrypt (não fica em texto puro).
+
+
+========================================================================
+ 1. TO-DO GLOBAL (FUNCIONALIDADES PRINCIPAIS)
+========================================================================
+[X] Tela inicial com uma busca para o usuário colocar a região
+[X] Lista de satélites próximos
+[X] Próximas passagens sobre a região
+[X] Alerta de passagem
+[X] Simulação IoT com condição do céu
+
+
+========================================================================
+ MOBILE
+========================================================================
+[X] Kotlin
+[X] Jetpack Compose
+[X] Android Studio (projeto Gradle/Compose pronto para abrir)
+[X] Material 3
+[X] Navigation Compose
+[X] Consumo da API real via Retrofit (data/remote + Repository.kt)
+    >> O app deixou de usar dados mockados e passou a consumir o backend
+       (GET /satelites, /passagens, /leituras, /alertas e POST /login).
+       Cada tela trata os estados: carregando / erro (Tentar novamente) / dados.
+
+
+========================================================================
+ BACKEND / API
+========================================================================
+[X] Java Spring Boot (Java 17 + Spring Boot 3.3.5)
+[ ] C# ASP.NET
+    >> Implementado em Spring Boot. Estrutura em camadas
+       Controller -> Service -> Repository -> Model, com DTOs,
+       tratamento global de exceções e configuração de segurança.
+
+
+========================================================================
+ BANCO DE DADOS
+========================================================================
+[ ] Oracle
+[X] PostgreSQL                            (perfil "postgres")
+[ ] SQL Server
+    >> A API roda por padrão com H2 em memória (perfil "dev", já populado,
+       sobe sem instalar nada) e também suporta PostgreSQL real.
+       Scripts e diagrama ER estão na pasta database/.
+
+
+========================================================================
+ SEGURANÇA
+========================================================================
+[X] bcrypt / BCryptPasswordEncoder        (senhas com hash, nunca em texto puro)
+[X] JWT (opcional)                        (token devolvido no POST /login - JwtService)
+[X] Validação de entrada                  (@NotBlank, @Email, @Size nos DTOs +
+                                           validação também no login mobile)
+[X] Proteção contra SQL Injection         (JPA usa consultas parametrizadas)
+
+
+========================================================================
+ IoT
+========================================================================
+[X] Python                                (iot/simulador_sensor.py)
+[ ] Node.js
+[X] JSON / dados mockados                 (iot/leitura_mockada.json)
+    >> Simulador de sensor em Python que gera leituras (temperatura, chuva,
+       nebulosidade, luminosidade) e envia para a API (POST /leituras) a cada
+       5s (ou --once). Sem hardware: os valores são gerados por código.
+       Sem a API no ar, ele imprime o JSON em modo mock.
+
+
+========================================================================
+ TESTES / DOCUMENTAÇÃO
+========================================================================
+[X] Swagger                               (springdoc - /swagger-ui.html)
+[X] Postman                               (docs/SatelliteTracker.postman_collection.json)
+[~] Prints / logs                         (app e API rodam e demonstram o fluxo;
+                                           prints devem ser feitos manualmente)
+
+
+========================================================================
+ 2. BANCO DE DADOS (ENTIDADES, RELACIONAMENTOS, SCRIPTS)
+========================================================================
+Entidades (model JPA + tabela):
+[X] usuarios
+[X] localizacoes
+[X] satelites
+[X] passagens
+[X] alertas
+[X] leituras_sensor
+
+Relacionamentos:
+[X] Usuario 1:N Localizacao
+[X] Localizacao 1:N Passagem
+[X] Satelite 1:N Passagem
+[X] Usuario 1:N Alerta
+[X] Localizacao 1:N LeituraSensor
+
+To-do do banco:
+[X] Criar diagrama ER                     (database/DIAGRAMA_ER.md)
+[X] Criar script CREATE TABLE             (database/01_schema.sql)
+[X] Criar chaves primárias                (em 01_schema.sql)
+[X] Criar chaves estrangeiras             (em 01_schema.sql)
+[X] Criar INSERTs com dados de exemplo    (database/02_insert_dados.sql)
+[X] Criar consultas SQL básicas           (database/03_consultas.sql)
+
+Consultas sugeridas:
+[X] Buscar todos os satélites
+[X] Buscar localizações de um usuário
+[X] Buscar próximas passagens por localização
+[X] Buscar alertas ativos
+[X] Buscar leituras dos sensores
+
+Entregáveis:
+[X] Diagrama ER
+[X] Script .sql
+[X] Consultas SQL de simulação
+
+
+========================================================================
+ 3. BACKEND / API (ESTRUTURA, ENDPOINTS, DOCUMENTAÇÃO)
+========================================================================
+Estrutura:
+[X] Criar projeto backend                 (backend/ - Maven + Spring Boot)
+[X] Criar camada Controller               (6 controllers)
+[X] Criar camada Service                  (6 services)
+[X] Criar camada Repository               (6 repositories)
+[X] Criar Models/Entities                 (6 entidades JPA + DTOs)
+[X] Configurar conexão com banco          (H2 dev + PostgreSQL postgres)
+
+Endpoints (13 no total - mínimo era 5):
+[X] GET    /satelites           (?nome= filtra)
+[X] GET    /satelites/{id}
+[X] GET    /passagens           (?localizacaoId= filtra)
+[X] POST   /usuarios            (hash BCrypt)
+[X] POST   /login               (devolve token JWT)
+[X] GET    /localizacoes        (?usuarioId=)
+[X] POST   /localizacoes
+[X] GET    /alertas             (?usuarioId=&apenasAtivos=)
+[X] POST   /alertas
+[X] PUT    /alertas/{id}
+[X] DELETE /alertas/{id}
+[X] GET    /leituras            (?localizacaoId=)
+[X] POST   /leituras            (usado pelo IoT)
+
+Documentação:
+[X] Configurar Swagger          (springdoc - /swagger-ui.html)
+[X] Criar Postman Collection    (docs/SatelliteTracker.postman_collection.json)
+
+Entregáveis:
+[X] Backend funcional
+[X] Pelo menos 5 endpoints      (foram 13)
+[X] Organização Controller, Service e Repository
+[X] Documentação da API         (Swagger + Postman)
+
+
+========================================================================
+ RESUMO GERAL
+========================================================================
+MOBILE ............... COMPLETO (Kotlin/Compose/Material 3, consumindo a API real)
+BACKEND / API ........ COMPLETO (Spring Boot, 13 endpoints, camadas + segurança)
+BANCO DE DADOS ....... COMPLETO (PostgreSQL: ER + schema + FKs + INSERTs + consultas)
+IoT (serviço) ........ COMPLETO (simulador Python enviando para POST /leituras)
+SEGURANÇA ............ COMPLETO (BCrypt + JWT + validação + proteção SQL Injection)
+DOCUMENTAÇÃO API ..... COMPLETO (Swagger + Postman)
+
+>> Todos os requisitos principais da Global Solution foram implementados.
+   Ver README.md para o passo a passo de como rodar cada parte.
+========================================================================

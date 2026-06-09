@@ -1,0 +1,10 @@
+{
+  "localizacaoId": 1,
+  "localizacao": "Niterói - RJ",
+  "temperatura": 24,
+  "chovendo": false,
+  "nebulosidade": 20,
+  "luminosidade": 18,
+  "observacaoFavoravel": true,
+  "alerta": "A ISS passará sobre sua região às 20:42. Condições favoráveis para observação."
+}

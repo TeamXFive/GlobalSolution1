@@ -1,0 +1,34 @@
+# ===== Build outputs =====
+# Backend (Maven)
+backend/target/
+# Mobile (Gradle/Android)
+build/
+*/build/
+*/*/build/
+.gradle/
+local.properties
+*.apk
+*.aar
+
+# ===== IDEs =====
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# ===== Logs / temporários =====
+*.log
+*.tmp
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Python (IoT) =====
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ===== Claude =====
+.claude/

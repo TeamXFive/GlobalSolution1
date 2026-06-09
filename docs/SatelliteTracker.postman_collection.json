@@ -1,0 +1,144 @@
+{
+  "info": {
+    "name": "Tem Satelite Passando Por Mim Agora? - FIAP",
+    "description": "Colecao de testes da API (Global Solution FIAP - Industria Espacial). Base URL: {{baseUrl}} (http://localhost:8080).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ],
+  "item": [
+    {
+      "name": "POST /usuarios - criar usuario",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/usuarios", "host": ["{{baseUrl}}"], "path": ["usuarios"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Caroline Nunes\",\n  \"email\": \"carol@email.com\",\n  \"senha\": \"123456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "POST /login - autenticar",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/login", "host": ["{{baseUrl}}"], "path": ["login"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"teste@email.com\",\n  \"senha\": \"123456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "GET /satelites - todos",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/satelites", "host": ["{{baseUrl}}"], "path": ["satelites"] }
+      }
+    },
+    {
+      "name": "GET /satelites?nome=ISS - filtrar",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/satelites?nome=ISS",
+          "host": ["{{baseUrl}}"], "path": ["satelites"],
+          "query": [{ "key": "nome", "value": "ISS" }]
+        }
+      }
+    },
+    {
+      "name": "GET /passagens?localizacaoId=1",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/passagens?localizacaoId=1",
+          "host": ["{{baseUrl}}"], "path": ["passagens"],
+          "query": [{ "key": "localizacaoId", "value": "1" }]
+        }
+      }
+    },
+    {
+      "name": "GET /localizacoes?usuarioId=1",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/localizacoes?usuarioId=1",
+          "host": ["{{baseUrl}}"], "path": ["localizacoes"],
+          "query": [{ "key": "usuarioId", "value": "1" }]
+        }
+      }
+    },
+    {
+      "name": "POST /localizacoes - criar",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/localizacoes", "host": ["{{baseUrl}}"], "path": ["localizacoes"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": 1,\n  \"nome\": \"Sao Paulo - SP\",\n  \"cidade\": \"Sao Paulo\",\n  \"estado\": \"SP\",\n  \"latitude\": -23.5505,\n  \"longitude\": -46.6333\n}"
+        }
+      }
+    },
+    {
+      "name": "GET /alertas?usuarioId=1&apenasAtivos=true",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/alertas?usuarioId=1&apenasAtivos=true",
+          "host": ["{{baseUrl}}"], "path": ["alertas"],
+          "query": [
+            { "key": "usuarioId", "value": "1" },
+            { "key": "apenasAtivos", "value": "true" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PUT /alertas/1 - atualizar",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/alertas/1", "host": ["{{baseUrl}}"], "path": ["alertas", "1"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": 1,\n  \"mensagem\": \"Alerta atualizado via Postman\",\n  \"ativo\": false\n}"
+        }
+      }
+    },
+    {
+      "name": "DELETE /alertas/1 - remover",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{baseUrl}}/alertas/1", "host": ["{{baseUrl}}"], "path": ["alertas", "1"] }
+      }
+    },
+    {
+      "name": "GET /leituras?localizacaoId=1",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/leituras?localizacaoId=1",
+          "host": ["{{baseUrl}}"], "path": ["leituras"],
+          "query": [{ "key": "localizacaoId", "value": "1" }]
+        }
+      }
+    },
+    {
+      "name": "POST /leituras - registrar (IoT)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/leituras", "host": ["{{baseUrl}}"], "path": ["leituras"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"localizacaoId\": 1,\n  \"temperatura\": 24,\n  \"chovendo\": false,\n  \"nebulosidade\": 20,\n  \"luminosidade\": 18\n}"
+        }
+      }
+    }
+  ]
+}
