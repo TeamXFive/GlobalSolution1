@@ -21,6 +21,23 @@ Ajuste `src/main/resources/application-postgres.properties` e:
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
 ```
 
+## Testes
+
+Os testes ficam em `src/test/java` e cobrem cenários das regras de negócio com JUnit 5 + Mockito:
+
+- criação de usuário com senha criptografada;
+- bloqueio de e-mail duplicado;
+- login com senha inválida;
+- criação de alerta ativo por padrão;
+- cálculo de observação favorável na leitura do sensor.
+
+Para executar:
+
+```bash
+./mvnw test        # Linux/Mac
+mvnw.cmd test      # Windows
+```
+
 ## Login de teste
 `teste@email.com` / `123456`
 
